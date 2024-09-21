@@ -10,6 +10,7 @@ export default function Index() {
       }}
     >
       <Text>Edit app/index.tsx to edit this screen.</Text>
+      <View className="flex-1 items-center justify-center bg-white"></View>
     </View>
   );
 }
