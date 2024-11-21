@@ -1,32 +1,22 @@
 {
   "expo": {
-    "name": "fresh-check",
-    "slug": "fresh-check",
+    "name": "fresh-track-mobile",
+    "slug": "fresh-track-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
-      "infoPlist": {
-        "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your Camera."
-      }
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.CAMERA"
-      ],
-      "package": "com.ntahlah.freshcheck"
+      "package": "com.cats.freshtrackmobile"
     },
     "web": {
       "bundler": "metro",
@@ -36,9 +26,12 @@
     "plugins": [
       "expo-router",
       [
-        "react-native-vision-camera",
+        "expo-splash-screen",
         {
-          "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera."
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
         }
       ]
     ],

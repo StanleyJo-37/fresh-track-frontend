@@ -1,14 +1,16 @@
 import { Text, View } from "react-native";
-import { Link } from "expo-router";
 
 export default function Index() {
   return (
     <View
-      className="flex-1 items-center justify-center bg-white min-h-0 min-w-0"
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
-      <Link href="/(tabs)/viewfinder" onPress={() => console.log("Open Camera NOWWWWWWWWWWWWWWWWWW")}>
-          Open Camera
-      </Link>
+      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Text>Testing</Text>
     </View>
   );
 }
