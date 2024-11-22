@@ -1,3 +1,4 @@
+import InventoryCarousel from "@/components/InventoryCarousel";
 import InventoryItem from "@/components/InvetoryItem";
 import { Inventory } from "@/types/inventory";
 import { Vegetable } from "@/types/vegetable";
@@ -24,7 +25,8 @@ export default function Index() {
     <View>
       {/* <Text>Edit app/index.tsx to edit this screen.</Text> */}
       {/* <Text>This is the dashboard.</Text>   */}
-      <InventoryItem inventory={dummy}/>
+      {/* <InventoryItem inventory={dummy}/> */}
+      <InventoryCarousel/>
     </View>
   );
 }
