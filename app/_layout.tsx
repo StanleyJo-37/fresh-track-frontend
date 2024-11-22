@@ -1,9 +1,9 @@
-import { Stack } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 
 export default function RootLayout() {
 
-  const [fontLoaded] = useFonts({
+  const [isFontLoaded] = useFonts({
     'Nunito-ExtraLight': require('@/assets/fonts/Nunito/Nunito-ExtraLight.ttf'),
     'Nunito-ExtraLightItalic': require('@/assets/fonts/Nunito/Nunito-ExtraLightItalic.ttf'),
 
@@ -25,6 +25,8 @@ export default function RootLayout() {
     'Nunito-ExtraBold': require('@/assets/fonts/Nunito/Nunito-ExtraBold.ttf'),
     'Nunito-ExtraBoldItalic': require('@/assets/fonts/Nunito/Nunito-ExtraBoldItalic.ttf'),
   });
+
+  if (!isFontLoaded) return <Splash />
 
   return <Stack screenOptions={{
     headerShown: false,
