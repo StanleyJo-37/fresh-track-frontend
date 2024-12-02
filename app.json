@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "fresh-track-mobile",
+    "name": "Fresh Track",
     "slug": "fresh-track-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/Splash.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/Splash.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.cats.freshtrackmobile"
@@ -21,15 +21,15 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/Splash.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
+          "image": "./assets/images/Splash.png",
+          "imageWidth": 1000,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
