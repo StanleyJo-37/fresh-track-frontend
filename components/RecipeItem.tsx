@@ -6,5 +6,5 @@ export default function RecipeItem() {
     <View>
       <Text>recipe-item</Text>
     </View>
-  )
+  );
 }

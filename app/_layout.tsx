@@ -1,6 +1,11 @@
-import { SplashScreen, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFonts } from "expo-font";
+import SplashScreenComponent from "@/components/SplashScreenComponent";
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from "react";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [isFontLoaded] = useFonts({
@@ -26,7 +31,13 @@ export default function RootLayout() {
     "Nunito-ExtraBoldItalic": require("@/assets/fonts/Nunito/Nunito-ExtraBoldItalic.ttf"),
   });
 
-  // if (!isFontLoaded) return <Splash />
+  useEffect(() => {
+    const init = async() => {
+      if (isFontLoaded) await SplashScreen.hideAsync();
+    }
+
+    init();
+  }, [isFontLoaded]);
 
   return (
     <GestureHandlerRootView>
