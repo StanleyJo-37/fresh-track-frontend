@@ -1,9 +1,10 @@
-import { Stack } from "expo-router";
+import { Tabs } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFonts } from "expo-font";
 import SplashScreenComponent from "@/components/SplashScreenComponent";
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from "react";
+import Toast from 'react-native-toast-message';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,23 +33,23 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    const init = async() => {
+    const hideSplashScreen = async() => {
       if (isFontLoaded) await SplashScreen.hideAsync();
     }
 
-    init();
+    hideSplashScreen();
   }, [isFontLoaded]);
 
   return (
     <GestureHandlerRootView>
-      <Stack
+      <Tabs
         screenOptions={{
           headerShown: false,
         }}
       >
-        <Stack.Screen name="index" />
-      </Stack>
-      
+        <Tabs.Screen name="dashboard" />
+      </Tabs>
+      <Toast />
     </GestureHandlerRootView>
   );
 }

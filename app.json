@@ -4,19 +4,25 @@
     "slug": "fresh-track-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/Splash.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Fresh Track memerlukan akses kamera."
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/Splash.png",
+        "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.cats.freshtrackmobile"
+      "package": "com.cats.freshtrackmobile",
+      "permissions": [
+        "android.permission.CAMERA"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -33,10 +39,26 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "Fresh Track memerlukan akses kamera."
+        }
+      ],
+      "expo-build-properties",
+      "./android-manifest.plugin.js"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b39f1803-3523-4074-abe7-643496722738"
+      }
     }
   }
 }

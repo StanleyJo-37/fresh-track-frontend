@@ -2,6 +2,7 @@ import InventoryCarousel from "@/components/InventoryCarousel";
 import InventoryItem from "@/components/InvetoryItem";
 import { Inventory } from "@/types/inventory";
 import { Vegetable } from "@/types/vegetable";
+import { Href, Link, router } from "expo-router";
 import { Text, View } from "react-native";
 
 export const static_img = {
@@ -26,6 +27,7 @@ export default function Index() {
       {/* <Text>Edit app/index.tsx to edit this screen.</Text> */}
       {/* <Text>This is the dashboard.</Text>   */}
       {/* <InventoryItem inventory={dummy}/> */}
+      <Link href={"/viewfinder" as Href} />
       <InventoryCarousel/>
     </View>
   );
