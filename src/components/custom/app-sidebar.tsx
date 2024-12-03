@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Sidebar,
   SidebarContent,
@@ -12,58 +14,61 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Icons } from "../icons";
 
 const items = [
   {
     title: "Home",
     url: "#",
-    icon: Home,
+    icon: <Icons.logo/>,
   },
   {
     title: "Inbox",
     url: "#",
-    icon: Inbox,
+    icon: <Icons.Inbox/>,
   },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
+  // {
+  //   title: "Calendar",
+  //   url: "#",
+  //   icon: Icons.Calendar,
+  // },
+  // {
+  //   title: "Search",
+  //   url: "#",
+  //   icon: Icons.Search,
+  // },
+  // {
+  //   title: "Settings",
+  //   url: "#",
+  //   icon: Icons.Settings,
+  // },
 ];
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-    <SidebarContent>
-      <SidebarGroup>
-        <SidebarGroupLabel>Application</SidebarGroupLabel>
-        <SidebarGroupContent>
-          <SidebarMenu>
-            {items.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuSubItem>
-                  <a href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </a>
-                </SidebarMenuSubItem>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarGroup>
-    </SidebarContent>
-  </Sidebar>
+    <Sidebar collapsible="icon">
+      <SidebarContent>
+        <SidebarGroup>
+
+          <SidebarGroupLabel>Application</SidebarGroupLabel>
+
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuSubItem>
+                    <a href={item.url} >
+                      {/* <item.icon/> */}
+                      {item.icon}
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuSubItem>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
   );
 }
