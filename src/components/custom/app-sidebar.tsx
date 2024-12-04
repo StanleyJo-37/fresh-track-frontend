@@ -28,6 +28,11 @@ const items = [
     url: "#",
     icon: <Icons.Inbox/>,
   },
+  {
+    title: "Camera",
+    url: "/viewfinder",
+    icon: <Icons.Camera />,
+  },
   // {
   //   title: "Calendar",
   //   url: "#",
