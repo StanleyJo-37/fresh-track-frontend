@@ -12,6 +12,7 @@ import {
   SidebarMenuAction,
   SidebarMenuItem,
   SidebarMenuSubItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 
 import { Icons } from "../icons";
@@ -46,29 +47,32 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon">
-      <SidebarContent>
-        <SidebarGroup>
+    <div className="flex flex-row">
+      <Sidebar collapsible="icon">
+        <SidebarContent>
+          <SidebarGroup>
 
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+            <SidebarGroupLabel>Application</SidebarGroupLabel>
 
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuSubItem>
-                    <a href={item.url} >
-                      {/* <item.icon/> */}
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuSubItem>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuSubItem>
+                      <a href={item.url} >
+                        {/* <item.icon/> */}
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+      <SidebarTrigger />
+    </div>
   );
 }
