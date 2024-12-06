@@ -77,7 +77,6 @@ export function AppSidebar() {
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
-      <SidebarTrigger />
     </div>
   );
 }

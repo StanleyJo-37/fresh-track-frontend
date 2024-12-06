@@ -32,8 +32,9 @@ export default function RootLayout({
       >
           <main>
             <SidebarProvider>
+              <AppSidebar />
+              <SidebarTrigger />
               <div className="w-screen h-screen flex flex-row">
-                <AppSidebar/>
                 {children}
               </div>
             </SidebarProvider>
