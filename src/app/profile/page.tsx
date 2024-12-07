@@ -2,7 +2,7 @@
 
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
-import { User } from "@/types";
+import { UserType } from "@/types";
 import { UserCircleIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -21,7 +21,7 @@ const schema = z.object({
 });
 
 export default function Page() {
-    const [user, setUser] = useState<User | undefined>(
+    const [user, setUser] = useState<UserType | undefined>(
         {
             username: "Stanley",
         }
