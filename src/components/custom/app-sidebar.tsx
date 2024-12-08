@@ -24,15 +24,20 @@ import { FreshtrackTrigger } from "./freshtrack-trigger";
 
 const items = [
   {
-    title: "Inbox",
-    url: "#",
-    icon: <Icons.Inbox />,
-  },
-  {
     title: "Camera",
     url: "/viewfinder",
-    icon: <Icons.Camera />,
+    icon: <Icons.Camera className="w-6 h-6"/>,
   },
+  {
+    title: "Inventory",
+    url: "#",
+    icon: <Icons.Inbox className="w-6 h-6"/>,
+  },
+  {
+    title: "Profile",
+    url: "/profile",
+    icon: <Icons.User className="w-6 h-6"/>
+  }
 ];
 
 export function AppSidebar() {
@@ -43,26 +48,28 @@ export function AppSidebar() {
   return (
     <>
       <div className="">
-        <FreshtrackTrigger className="absolute m-2" />
+        <FreshtrackTrigger className="absolute m-3" />
 
         <Sidebar variant="sidebar" className="z-10">
           <SidebarContent>
-            <div className="h-8 w-8 invisible" />
+            <div className="h-8 w-8 mb-5 invisible" />
 
             <SidebarGroup>
               {/* <SidebarGroupLabel>Projects</SidebarGroupLabel> */}
               <SidebarGroupContent>
                 <SidebarMenu>
+
                   {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton>
-                        <a href={item.url}>
+                        <a href={item.url} className="flex gap-2 items-center text-lg">
                           {item.icon}
                           <span>{item.title}</span>
                         </a>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
+
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>

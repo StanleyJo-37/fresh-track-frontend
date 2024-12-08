@@ -1,6 +1,6 @@
 import { Axios } from 'axios';
 
-const baseURL = "http://localhost:8000";
+const baseURL = "http://localhost:8000/api";
 // const baseURL = "https://api.fresh-track.com";
 
 const axios = new Axios({
@@ -8,6 +8,7 @@ const axios = new Axios({
     timeout: 30000, // Request timeout in milliseconds
     headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json'
     }
 });
 
@@ -19,18 +20,6 @@ axios.interceptors.request.use(
     },
     error => {
         // Do something with request error
-        return Promise.reject(error);
-    }
-);
-
-// Add a response interceptor
-axios.interceptors.response.use(
-    response => {
-        // Do something with response data
-        return response;
-    },
-    error => {
-        // Do something with response error
         return Promise.reject(error);
     }
 );
