@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Sidebar,
@@ -13,70 +13,62 @@ import {
   SidebarMenuItem,
   SidebarMenuSubItem,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 import { Icons } from "../icons";
+import { Button } from "../ui/button";
+import { useState } from "react";
+import { FreshtrackTrigger } from "./freshtrack-trigger";
 
 const items = [
   {
-    title: "Home",
-    url: "#",
-    icon: <Icons.logo/>,
-  },
-  {
     title: "Inbox",
     url: "#",
-    icon: <Icons.Inbox/>,
+    icon: <Icons.Inbox />,
   },
   {
     title: "Camera",
     url: "/viewfinder",
     icon: <Icons.Camera />,
   },
-  // {
-  //   title: "Calendar",
-  //   url: "#",
-  //   icon: Icons.Calendar,
-  // },
-  // {
-  //   title: "Search",
-  //   url: "#",
-  //   icon: Icons.Search,
-  // },
-  // {
-  //   title: "Settings",
-  //   url: "#",
-  //   icon: Icons.Settings,
-  // },
 ];
 
 export function AppSidebar() {
+  // const [open, setOpen] = useState<boolean>(false);
+
+  // const { toggleSidebar } = useSidebar();
+
   return (
-    <div className="flex flex-row">
-      <Sidebar collapsible="icon">
-        <SidebarContent>
-          <SidebarGroup>
+    <>
+      <div className="">
+        <FreshtrackTrigger className="absolute m-2" />
 
-            <SidebarGroupLabel>Application</SidebarGroupLabel>
+        <Sidebar variant="sidebar" className="z-10">
+          <SidebarContent>
 
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuSubItem>
-                      <a href={item.url} >
-                        {/* <item.icon/> */}
-                        {item.icon}
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuSubItem>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
-    </div>
+            <div className="h-8 w-8 invisible"/>
+
+            <SidebarGroup>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {items.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuSubItem>
+                        <a href={item.url}>
+                          {/* <item.icon/> */}
+                          {item.icon}
+                          <span>{item.title}</span>
+                        </a>
+                      </SidebarMenuSubItem>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+        </Sidebar>
+      </div>
+    </>
   );
 }
