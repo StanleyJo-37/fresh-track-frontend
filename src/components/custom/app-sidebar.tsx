@@ -10,6 +10,7 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuAction,
+  SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSubItem,
   SidebarTrigger,
@@ -46,21 +47,20 @@ export function AppSidebar() {
 
         <Sidebar variant="sidebar" className="z-10">
           <SidebarContent>
-
-            <div className="h-8 w-8 invisible"/>
+            <div className="h-8 w-8 invisible" />
 
             <SidebarGroup>
+              {/* <SidebarGroupLabel>Projects</SidebarGroupLabel> */}
               <SidebarGroupContent>
                 <SidebarMenu>
                   {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuSubItem>
+                      <SidebarMenuButton>
                         <a href={item.url}>
-                          {/* <item.icon/> */}
                           {item.icon}
                           <span>{item.title}</span>
                         </a>
-                      </SidebarMenuSubItem>
+                      </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
                 </SidebarMenu>
