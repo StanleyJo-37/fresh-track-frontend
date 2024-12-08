@@ -11,7 +11,7 @@ export function FreshtrackTrigger({ className }: { className?: string }) {
     <div
       onClick={toggleSidebar}
       className={cn(
-        "hover:cursor-pointer h-8 w-8 aspect-square z-20",
+        "hover:cursor-pointer h-8 w-8 aspect-square z-30",
         className
       )}
     >

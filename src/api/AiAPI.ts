@@ -1,15 +1,14 @@
 import axios from "./axios";
 
 const AiAPI = {
-    infer: async(image: string) => {
+    infer: async(data: any) => {
         return await axios.request({
-            url: "/ai/infer",
+            url: "/ai",
             method: "POST",
-            data: {
-                "image_upload": image,
-            }
+            data,
         });
-    }
+    },
+    
 };
 
 export default AiAPI;
