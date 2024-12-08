@@ -39,7 +39,7 @@ export default function RootLayout({
       >
         <SidebarProvider>
           <AppSidebar />
-          <main className="absolute">
+          <main className="absolute w-screen h-screen">
             {/* <SidebarTrigger /> */}
             {children}
           </main>

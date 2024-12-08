@@ -50,7 +50,7 @@ export function AppSidebar() {
       <div className="">
         <FreshtrackTrigger className="absolute m-3" />
 
-        <Sidebar variant="sidebar" className="z-0">
+        <Sidebar variant="sidebar">
           <SidebarContent>
             <div className="h-8 w-8 mb-5 invisible" />
 

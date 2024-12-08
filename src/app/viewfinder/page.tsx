@@ -14,17 +14,15 @@ export default function Page() {
   const router = useRouter();
   const { width: screenWidth, height: screenHeight } = useWindowSize();
 
-  const [data, setData] = useState("");
-
   const snap = useCallback(async () => {
     const image = cameraRef.current?.getScreenshot(); // get base64
 
-    const file = base64ToFile(image!, "temp.jpeg");
-    const formData = new FormData();
-    formData.append("image_upload", file);
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.setItem("snapped_image", image ?? "")
+    }
 
-    const { data } = await AiAPI.infer(formData);
-    setData(data);
+    router.push('/viewfinder/item')
+
   }, [cameraRef]);
 
   const videoConstraints = {
@@ -55,7 +53,7 @@ export default function Page() {
 
       <div className="w-full h-fit relative flex justify-center">
         <div
-          className="rounded-full bg-white w-16 h-16 my-4 fixed bottom-0 flex justify-center items-center"
+          className="rounded-full bg-white w-16 h-16 my-4 fixed bottom-0 flex justify-center items-center active:shadow-inner border-2 border-green-500/50 shadow-lg"
           onClick={snap}
         >
           <Icons.Camera className="w-1/2 h-1/2" />
