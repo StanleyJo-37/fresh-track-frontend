@@ -11,7 +11,8 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 type FoodResult = {
-  food_name: string;
+  id?: number;
+  local_name: string;
   food_type: string;
   freshness: number;
   fresh_till: string;
@@ -60,6 +61,7 @@ export default function Page() {
       const formData = new FormData();
 
       formData.append("image_upload", file);
+      formData.append("date_upload", (new Date()).toISOString());
       const results = await AiAPI.infer(formData);
 
       setResult(JSON.parse(results.data));
@@ -94,7 +96,7 @@ export default function Page() {
 
       <div className="container max-w-[70rem] flex flex-col items-center my-10">
         {/* <div>
-          <h2>FoodName: {result?.food_name}</h2>
+          <h2>FoodName: {result?.local_name}</h2>
           <p>FoodType: {result?.food_type}</p>
           <p>Freshness: {result?.freshness}</p>
         </div> */}
@@ -103,13 +105,15 @@ export default function Page() {
           <Image src="https://placehold.co/400" alt="fruit" width={400} height={400}/>
         </div> */}
 
+        {result?.id ?? <h2>FOOD NOT FOUND</h2>}
+
         {/* Food Image */}
         <div className="text-center">
           <Avatar className="w-36 h-36 border-4 border-white">
             <AvatarImage src="https://placehold.co/400" />
           </Avatar>
           <h2 className="mt-4 text-2xl font-bold capitalize">
-            {result?.food_name}
+            {result?.local_name}
           </h2>
         </div>
 
@@ -123,6 +127,10 @@ export default function Page() {
                 <p>Sugar: 100</p>
                 <p>Sodium: 100</p>
                 <p>Iron: 100</p>
+            </div>
+
+            <div>
+              {result?.fresh_till}
             </div>
 
             <div className="w-full">
