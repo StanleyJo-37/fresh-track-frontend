@@ -7,3 +7,8 @@ export interface UserType {
 export interface ResultsType {
 
 }
+
+export interface ViewfinderContextProps {
+    image: string;
+    setImage: (newImage: string) => void;
+}
