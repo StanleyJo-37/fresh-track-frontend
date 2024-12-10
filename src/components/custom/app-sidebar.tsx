@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Sidebar,
@@ -10,73 +10,72 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuAction,
+  SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSubItem,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 import { Icons } from "../icons";
+import { Button } from "../ui/button";
+import { useState } from "react";
+import { FreshtrackTrigger } from "./freshtrack-trigger";
 
 const items = [
   {
-    title: "Home",
-    url: "#",
-    icon: <Icons.logo/>,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: <Icons.Inbox/>,
-  },
-  {
     title: "Camera",
     url: "/viewfinder",
-    icon: <Icons.Camera />,
+    icon: <Icons.Camera className="w-6 h-6"/>,
   },
-  // {
-  //   title: "Calendar",
-  //   url: "#",
-  //   icon: Icons.Calendar,
-  // },
-  // {
-  //   title: "Search",
-  //   url: "#",
-  //   icon: Icons.Search,
-  // },
-  // {
-  //   title: "Settings",
-  //   url: "#",
-  //   icon: Icons.Settings,
-  // },
+  {
+    title: "Inventory",
+    url: "/inventory",
+    icon: <Icons.Inbox className="w-6 h-6"/>,
+  },
+  {
+    title: "Profile",
+    url: "/profile",
+    icon: <Icons.User className="w-6 h-6"/>
+  }
 ];
 
 export function AppSidebar() {
+  // const [open, setOpen] = useState<boolean>(false);
+
+  // const { toggleSidebar } = useSidebar();
+
   return (
-    <div className="flex flex-row">
-      <Sidebar collapsible="icon">
-        <SidebarContent>
-          <SidebarGroup>
+    <>
+      <div className="">
+        <FreshtrackTrigger className="absolute m-3" />
 
-            <SidebarGroupLabel>Application</SidebarGroupLabel>
+        <Sidebar variant="sidebar">
+          <SidebarContent>
+            <div className="h-8 w-8 mb-5 invisible" />
 
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuSubItem>
-                      <a href={item.url} >
-                        {/* <item.icon/> */}
-                        {item.icon}
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuSubItem>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
-    </div>
+            <SidebarGroup>
+              {/* <SidebarGroupLabel>Projects</SidebarGroupLabel> */}
+              <SidebarGroupContent>
+                <SidebarMenu>
+
+                  {items.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton>
+                        <a href={item.url} className="flex gap-2 items-center text-lg">
+                          {item.icon}
+                          <span>{item.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+        </Sidebar>
+      </div>
+    </>
   );
 }
