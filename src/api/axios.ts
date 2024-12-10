@@ -1,6 +1,6 @@
 import { Axios } from 'axios';
 
-const baseURL = "http://localhost:8000";
+const baseURL = "http://localhost:8000/api/";
 // const baseURL = "https://api.fresh-track.com";
 
 const axios = new Axios({
