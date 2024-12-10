@@ -1,6 +1,7 @@
 "use client";
 
 import AiAPI from "@/api/AiAPI";
+import useViewfinder from "@/hooks/use-viewfinder";
 import { ResultsType } from "@/types";
 import { AxiosError } from "axios";
 import Image from "next/image";
@@ -9,14 +10,14 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Page() {
-    const params = useParams();
-    const imageString = params.image as string;
+    const { image, setImage } = useViewfinder();
+
     const [results, setResults] = useState<ResultsType>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const fetchResults = useCallback(async() => {
         try {
-            const results = await AiAPI.infer(imageString);
+            const results = await AiAPI.infer(image);
             setResults(results.data);
         } catch (err) {
             if (err instanceof AxiosError) {
@@ -25,18 +26,22 @@ export default function Page() {
         } finally {
             setIsLoading(false);
         }
-    }, [imageString]);
+    }, [image]);
 
     useEffect(() => {
         fetchResults();
+        console.log(image);
+
+        return () => setImage("");
     }, []);
 
     return (
         <div>
-            <Image
-                src={imageString}
+            <img
+                src={image}
                 alt="image"
             />
+            {image}
         </div>
     );
 }

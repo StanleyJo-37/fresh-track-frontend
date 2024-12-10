@@ -1,6 +1,7 @@
 "use client";
 
 import { Icons } from '@/components/icons';
+import useViewfinder from '@/hooks/use-viewfinder';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef } from 'react';
 import Webcam from "react-webcam";
@@ -8,10 +9,14 @@ import Webcam from "react-webcam";
 export default function Page() {
     const cameraRef = useRef<Webcam>(null);
     const router = useRouter();
+    const { setImage } = useViewfinder();
 
     const snap = useCallback(() => {
         const image = cameraRef.current?.getScreenshot();
-        router.push(`/viewfinder/item/`);
+        if (image) {
+            setImage(image);
+            router?.push(`/viewfinder/item`);
+        }
     }, [cameraRef]);
 
     useEffect(() => {
