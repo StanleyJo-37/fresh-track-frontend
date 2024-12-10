@@ -30,7 +30,7 @@ const items = [
   },
   {
     title: "Inventory",
-    url: "#",
+    url: "/inventory",
     icon: <Icons.Inbox className="w-6 h-6"/>,
   },
   {

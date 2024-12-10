@@ -37,9 +37,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SidebarProvider>
+        <SidebarProvider defaultOpen={false}>
           <AppSidebar />
-          <main className="absolute w-screen h-screen">
+          <main className="absolute w-screen min-h-screen">
             {/* <SidebarTrigger /> */}
             {children}
           </main>

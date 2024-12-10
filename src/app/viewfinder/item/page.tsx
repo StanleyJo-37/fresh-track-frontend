@@ -3,20 +3,12 @@
 import AiAPI from "@/api/AiAPI";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { base64ToFile, cn } from "@/lib/utils";
-import { ResultsType } from "@/types";
+import { FoodResult, ResultsType } from "@/types";
 import { AxiosError } from "axios";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-
-type FoodResult = {
-  id?: number;
-  local_name: string;
-  food_type: string;
-  freshness: number;
-  fresh_till: string;
-};
 
 const freshRGBValue = (value: number) => {
   // Define RGB values for red, yellow, and green
