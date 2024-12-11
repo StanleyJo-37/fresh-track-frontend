@@ -63,7 +63,13 @@ export default function Page() {
                 </form>
                 <p className="text-sm text-center mt-2">
                     Already have an account?{' '}
-                    <a href="" className="text-green-600" onClick={() => router.push('/auth/login')}>Sign In</a>
+                    <button
+                        className="text-green-600"
+                        onClick={() => router.push('/login')}
+                    >
+                        Sign In
+                    </button>
+                    {/* <a href="" className="text-green-600" onClick={() => router.push('/auth/login')}>Sign In</a> */}
                 </p>
             </div>
         </div>
