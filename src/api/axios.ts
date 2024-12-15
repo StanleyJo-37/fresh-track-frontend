@@ -8,7 +8,8 @@ const axios = new Axios({
     timeout: 30000, // Request timeout in milliseconds
     headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*',
     }
 });
 

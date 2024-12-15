@@ -1,5 +1,6 @@
 "use client";
 
+import AuthAPI from "@/api/AuthAPI";
 import axios from "@/api/axios";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -44,15 +45,11 @@ export default function Page() {
 
         try {
             // console.log(formData);
-            const response = await axios.request({
-                url: "/register",
-                method: "POST",
-                data: data,
-            });
+            const response = await AuthAPI.register(data);
 
             console.log(response.data);
 
-            router.push("/login")
+            // router.push("/login")
         } catch (err: any) {
             console.error("Server Error:", err.response.data);
             setError(err.response?.data?.message || "Invalid input");

@@ -1,46 +1,45 @@
 "use client";
 
+import AuthAPI from "@/api/AuthAPI";
 import axios from "@/api/axios";
 import { Button } from "@/components/ui/button";
 import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 
 export default function Page() {
     const router = useRouter();
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState({
-        username: "",
-        password: "",
-    });
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    // const [formData, setFormData] = useState({
+    //     username: "",
+    //     password: "",
+    // });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { id, value } = e.target;
-        setFormData({...formData, [id]: value});
-    }
+    // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const { id, value } = e.target;
+    //     setFormData({...formData, [id]: value});
+    // }
 
-    const handleSubmit =  async (e: React.FormEvent) => {
+    const handleSubmit =  useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
 
         setIsLoading(true);
         setError("");
 
         const data = {
-            username: formData.username,
-            password: formData.password,
+            username,
+            password,
         };
 
-        console.log(data)
+        console.log(data);
 
         try {
             // console.log(formData);
-            const response = await axios.request({
-                url: "/login",
-                method: "POST",
-                data: data,
-            });
+            const response = await AuthAPI.login(data);
 
             console.log(response.data);
 
@@ -51,7 +50,7 @@ export default function Page() {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [username, password]);
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -71,8 +70,8 @@ export default function Page() {
                             id="username"
                             type="username"
                             placeholder="Stanley oliver"
-                            value={formData.username}
-                            onChange={handleInputChange}
+                            // value={formData.username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                             className="w-full px-3 py-2 mt-1 border-0 rounded-lg bg-gray-100 shadow-sm"
                         />
@@ -83,8 +82,8 @@ export default function Page() {
                             id="password"
                             type="password"
                             placeholder=""
-                            value={formData.password}
-                            onChange={handleInputChange}
+                            // value={formData.password}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                             className="w-full px-3 py-2 mt-1 border-0 rounded-lg bg-gray-100 shadow-sm"
                         />
