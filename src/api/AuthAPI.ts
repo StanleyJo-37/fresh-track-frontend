@@ -10,7 +10,7 @@ const AuthAPI = {
         return await axios.request({
             url: "/register",
             method: "POST",
-            data: data,
+            data
         });
     },
 
@@ -21,7 +21,11 @@ const AuthAPI = {
         return await axios.request({
             url: "/login",
             method: "POST",
-            data: data,
+            data,
+            headers: {
+                "Content-Type": "application/json",
+                'Accept': 'application/json'
+            },
         });
     }
     
