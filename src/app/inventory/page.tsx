@@ -7,22 +7,29 @@ export default async function Page() {
 
   try {
     const response = await InventoryAPI.all();
-    inventory = response.data;
+    inventory = JSON.parse(response.data);
   } catch (err: any) {
-    console.error("Server Error:", err.response.data);
+    console.error("Server Error:", err);
+    inventory = [];
   };
 
   return (
-    <section className="w-full h-full flex justify-center">
+    <section className="w-full h-full flex justify-center py-16">
       <div className="container max-w-[70rem]">
         {
-          inventory?.map((item) => (
-              <InventoryCard
-                food_item={item}
-                key={item.id}
-              />
-            )
-          )
+          inventory ?
+            <div className="grid grid-cols-2 gap-12">
+              {
+                inventory.map((item) => (
+                    <InventoryCard
+                      food_item={item}
+                      key={item.id}
+                    />
+                  )
+                )
+              }
+            </div> :
+            <></>
         }
       </div>
     </section>
