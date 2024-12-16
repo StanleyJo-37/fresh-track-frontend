@@ -1,12 +1,8 @@
+import { LoginProps, RegisterProps } from "@/types";
 import axios from "./axios";
 
 const AuthAPI = {
-    register: async(data: {
-        email: string;
-        username: string;
-        password: string;
-        confirm_password: string;
-    }) => {
+    register: async(data: RegisterProps) => {
         return await axios.request({
             url: "/register",
             method: "POST",
@@ -14,10 +10,7 @@ const AuthAPI = {
         });
     },
 
-    login: async(data: {
-        username: string;
-        password: string;
-    }) => {
+    login: async(data: LoginProps) => {
         return await axios.request({
             url: "/login",
             method: "POST",
