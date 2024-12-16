@@ -10,10 +10,10 @@ import { cn } from "@/lib/utils";
 
 export default function FoodItemPicker({
     food_results,
-    ref
+    ref,
 }: {
     food_results: FoodResult[];
-    ref: Ref<{ getSelection: () => number[] }>;
+    ref: Ref<{ getSelectedIndex: () => number[] }>;
 }) {
     const [selected, setSelected] = useState<number[]>([]);
     const { toast } = useToast();
@@ -27,7 +27,7 @@ export default function FoodItemPicker({
     }
 
     useImperativeHandle(ref, () => ({
-        getSelection: () => selected
+        getSelectedIndex: () => selected
     }), [selected]);
 
     return (

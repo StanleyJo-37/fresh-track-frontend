@@ -1,13 +1,17 @@
 "use client";
 
 import AiAPI from "@/api/AiAPI";
+import InventoryAPI from "@/api/InventoryAPI";
+import FoodItemPicker from "@/components/custom/food-item-picker";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { base64ToFile, cn } from "@/lib/utils";
-import { FoodResult, ResultsType } from "@/types";
+import { AddFoodInventoryProps, FoodResult, ResultsType } from "@/types";
 import { AxiosError } from "axios";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 const freshRGBValue = (value: number) => {
@@ -44,8 +48,35 @@ export default function Page() {
     imageString = localStorage.getItem("snapped_image") as string;
   }
 
-  const [result, setResult] = useState<FoodResult>();
+  const [result, setResult] = useState<FoodResult[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [index, setIndex] = useState<number>(0);
+  const { toast } = useToast();
+
+  const FoodPickerRef = useRef<{ getSelectedIndex: () => number[] }>(null); 
+
+  const uploadItems = useCallback(async(selected: number[]) => {
+      try {
+          const selectedItems: AddFoodInventoryProps[] = selected.map((idx: number) => ({
+              food_product_id: result?.[idx].id,
+              fresh_until: result?.[idx].fresh_till,
+              quantity: 1,
+          } as AddFoodInventoryProps));
+          
+          const response = await InventoryAPI.addItems(selectedItems);
+
+          toast({
+              title: "Items added...",
+              variant: "default"
+          });
+      } catch (err) {
+          toast({
+              title: "Failed to upload items.",
+              description: `${err}`,
+              variant: "destructive"
+          });
+      }
+  }, [result]);
 
   const fetchResults = useCallback(async () => {
     try {
@@ -59,7 +90,11 @@ export default function Page() {
       setResult(JSON.parse(results.data));
     } catch (err) {
       if (err instanceof AxiosError) {
-        toast("Gangguan dialami. Periksa kembali jaringan Anda.");
+        toast({
+          title: "Gangguan dialami. Periksa kembali jaringan Anda.",
+          description: `${err}`,
+          variant: "destructive",
+        });
       }
     } finally {
       setIsLoading(false);
@@ -81,8 +116,8 @@ export default function Page() {
           "w-full absolute -z-10 bottom-0 transition-all duration-300"
         )}
         style={{
-          backgroundColor: freshRGBValue((result?.freshness ?? 0) / 100),
-          height: `${result?.freshness ?? 0}%`,
+          backgroundColor: freshRGBValue((result?.[index].freshness ?? 0) / 100),
+          height: `${result?.[index].freshness ?? 0}%`,
         }}
       />
 
@@ -97,7 +132,7 @@ export default function Page() {
           <Image src="https://placehold.co/400" alt="fruit" width={400} height={400}/>
         </div> */}
 
-        {result?.id ?? <h2>FOOD NOT FOUND</h2>}
+        {result?.[index].id ?? <h2>FOOD NOT FOUND</h2>}
 
         {/* Food Image */}
         <div className="text-center">
@@ -105,7 +140,7 @@ export default function Page() {
             <AvatarImage src="https://placehold.co/400" />
           </Avatar>
           <h2 className="mt-4 text-2xl font-bold capitalize">
-            {result?.local_name}
+            {result?.[index].local_name}
           </h2>
         </div>
 
@@ -122,7 +157,7 @@ export default function Page() {
             </div>
 
             <div>
-              {result?.fresh_till}
+              {result?.[index].fresh_till}
             </div>
 
             <div className="w-full">
@@ -133,9 +168,22 @@ export default function Page() {
 
         {/* Freshness */}
         <div>
-          <h2 className="text-black font-semibold text-[64px]">{result?.freshness ?? 0}%</h2>
+          <h2 className="text-black font-semibold text-[64px]">{result?.[index].freshness ?? 0}%</h2>
         </div>
       </div>
+      <FoodItemPicker
+        food_results={result ?? []}
+        ref={FoodPickerRef}
+      />
+      <Button
+        variant="default"
+        className="w-full"
+        onClick={() => {
+          uploadItems(FoodPickerRef?.current?.getSelectedIndex() ?? []);
+        }}
+      >
+        Buy
+      </Button>
     </section>
   );
 }
