@@ -58,6 +58,7 @@ export default function Page() {
   const FoodPickerRef = useRef<{ getSelectedIndex: () => number[] }>(null); 
 
   const uploadItems = useCallback(async(selected: number[]) => {
+    setIsLoading(true);
     try {
         const selectedItems: AddFoodInventoryProps[] = selected.map((idx: number) => ({
             food_product_id: results?.[idx].id,
@@ -71,12 +72,16 @@ export default function Page() {
             title: "Items added...",
             variant: "default"
         });
+
+        router.back();
     } catch (err) {
         toast({
             title: "Failed to upload items.",
             description: `${err}`,
             variant: "destructive"
         });
+    } finally {
+      setIsLoading(false);
     }
   }, [results]);
 
@@ -183,7 +188,6 @@ export default function Page() {
           className="w-full"
           onClick={() => {
             uploadItems(FoodPickerRef?.current?.getSelectedIndex() ?? []);
-            router.back();
           }}
         >
           Buy
