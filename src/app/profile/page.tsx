@@ -1,15 +1,12 @@
 "use client";
 
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
 import { UserType } from "@/types";
 import { UserCircleIcon } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -21,40 +18,7 @@ const schema = z.object({
 });
 
 export default function Page() {
-    const [user, setUser] = useState<UserType | undefined>(
-        {
-            username: "Stanley",
-        }
-    );
-
-    // const fetchUser = async() => {
-    //     try {
-    //         const data = await 
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     fetchUser();
-    // }, []);
-
-    // const {
-    //     control,
-    //     register,
-    //     watch,
-    //     formState: {
-    //         isDirty,
-    //         isLoading,
-    //         errors,
-    //     }
-    // } = useForm<z.infer<typeof schema>>({
-    //     resolver: zodResolver(schema),
-    //     defaultValues: {
-    //         username: user?.username ?? "",
-    //         email: user?.email ?? "",
-    //         password: "",
-    //         conf_password: ""
-    //     }
-    // });
+    const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") as string) as UserType : null;
 
     const formHook = useForm<z.infer<typeof schema>>({
         resolver: zodResolver(schema),
@@ -65,7 +29,6 @@ export default function Page() {
             conf_password: ""
         }
     });
-
 
     return (
         <div className="w-screen h-screen flex justify-center items-center">
