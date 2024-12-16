@@ -11,6 +11,7 @@ import { useCallback, useState } from "react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import { Dialog, DialogClose, DialogContent, DialogHeader } from "../ui/dialog";
 import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function InventoryCard({
     food_item
@@ -19,6 +20,13 @@ export default function InventoryCard({
 }) {
     const { toast } = useToast();
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
+
+    const status = [
+        "Kadaluarsa",
+        "Harus digunakan hari ini.",
+        "Harus segera digunakan.",
+        "Masih segar.",
+    ];
 
     const deleteItem = useCallback(async() => {
         try {
@@ -56,6 +64,17 @@ export default function InventoryCard({
                         <p>Ditambahkan pada: {food_item.bought_at}</p>
                         <p>Segar sampai: {food_item.fresh_until}</p>
                         <p>Kuantitas: {food_item.quantity} gram</p>
+                        <strong className={
+                            cn(
+                                "text-sm",
+                                food_item.status === 0 && "text-red-500",
+                                food_item.status === 1 && "text-yellow-500",
+                                food_item.status === 2 && "text-yellow-500",
+                                food_item.status === 3 && "text-green-500",
+                            )
+                        }>
+                            Status: {status[food_item.status]}
+                        </strong>
                     </div>
                 </div>
 

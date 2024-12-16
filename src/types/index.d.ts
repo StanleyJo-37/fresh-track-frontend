@@ -51,4 +51,5 @@ export type InventoryItem = {
   fresh_until: string,
   bought_at: string;
   quantity: number;
+  status: 0 | 1 | 2 | 3;
 }
