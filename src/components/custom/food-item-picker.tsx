@@ -6,6 +6,7 @@ import { Avatar } from "../ui/avatar";
 import { Ref, useCallback, useImperativeHandle, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import InventoryAPI from "@/api/InventoryAPI";
+import { cn } from "@/lib/utils";
 
 export default function FoodItemPicker({
     food_results,
@@ -35,7 +36,11 @@ export default function FoodItemPicker({
                 food_results.map((food, index) => (
                     <div key={index} className="flex justify-between items-center p-4 border-b-2 border-gray-200">
                         <Avatar
-                            className="w-36 h-36 border-4 border-white"
+                            className={cn(
+                                "w-36 h-36 border-4 border-white",
+                                selected.includes(index) && "border-green-500",
+                                !selected.includes(index) && "border-gray-500"
+                            )}
                             onClick={() => {
                                 onChange(index);
                             }}
