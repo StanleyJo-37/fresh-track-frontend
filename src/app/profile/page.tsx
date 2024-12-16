@@ -18,7 +18,10 @@ const schema = z.object({
 });
 
 export default function Page() {
-    const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") as string) as UserType : null;
+    let user: UserType | null = null;
+    if (typeof window !== "undefined" && window.localStorage) {
+        user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") as string) as UserType : null;
+    }
 
     const formHook = useForm<z.infer<typeof schema>>({
         resolver: zodResolver(schema),
