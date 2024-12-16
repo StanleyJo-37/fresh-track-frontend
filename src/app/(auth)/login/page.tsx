@@ -3,6 +3,8 @@
 import AuthAPI from "@/api/AuthAPI";
 import axios from "@/api/axios";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
@@ -10,10 +12,11 @@ import { useCallback, useState } from "react";
 
 export default function Page() {
     const router = useRouter();
-    const [error, setError] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [error, setError] = useState<any>("");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [remember, setRemember] = useState<boolean>(false);
     // const [formData, setFormData] = useState({
     //     username: "",
     //     password: "",
@@ -33,17 +36,13 @@ export default function Page() {
         const data = {
             username,
             password,
+            remember,
         };
-
-        console.log(data);
 
         try {
             // console.log(formData);
             const response = await AuthAPI.login(data);
-
-            console.log(response.data);
-
-            // router.push("/")
+            router.push("/")
         } catch (err: any) {
             console.error("Server Error:", err.response.data);
             setError(err.response?.data?.message || "Invalid input");
@@ -87,6 +86,14 @@ export default function Page() {
                             required
                             className="w-full px-3 py-2 mt-1 border-0 rounded-lg bg-gray-100 shadow-sm"
                         />
+                    </div>
+                    <div>
+                        <Checkbox
+                            name="remember"
+                            checked={remember}
+                            onCheckedChange={() => {setRemember(!remember)}}
+                        />
+                        <Label htmlFor="remember" className="ml-2">Remember me</Label>
                     </div>
                     <Button 
                         variant="default"
