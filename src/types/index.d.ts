@@ -36,7 +36,7 @@ export type LoginProps = {
 
 export type AddFoodInventoryProps = {
   food_product_id: number;
-  fresh_until: Date;
+  fresh_until: string;
   quantity: number;
 };
 

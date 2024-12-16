@@ -17,7 +17,7 @@ const InventoryAPI = {
         });
     },
 
-    addItem: async(data: AddFoodInventoryProps[]) => {
+    addItems: async(data: AddFoodInventoryProps[]) => {
         return await axios.request({
             url: "/inventory/",
             method: "POST",
