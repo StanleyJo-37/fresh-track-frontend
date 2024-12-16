@@ -9,10 +9,11 @@ import { useToast } from "@/hooks/use-toast";
 import { base64ToFile, cn } from "@/lib/utils";
 import { AddFoodInventoryProps, FoodResult, ResultsType } from "@/types";
 import { AxiosError } from "axios";
+import { ChevronLeftCircle, ChevronRightCircle } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 
 const freshRGBValue = (value: number) => {
   // Define RGB values for red, yellow, and green
@@ -48,7 +49,8 @@ export default function Page() {
     imageString = localStorage.getItem("snapped_image") as string;
   }
 
-  const [result, setResult] = useState<FoodResult[]>();
+  const router = useRouter();
+  const [results, setResult] = useState<FoodResult[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [index, setIndex] = useState<number>(0);
   const { toast } = useToast();
@@ -56,27 +58,27 @@ export default function Page() {
   const FoodPickerRef = useRef<{ getSelectedIndex: () => number[] }>(null); 
 
   const uploadItems = useCallback(async(selected: number[]) => {
-      try {
-          const selectedItems: AddFoodInventoryProps[] = selected.map((idx: number) => ({
-              food_product_id: result?.[idx].id,
-              fresh_until: result?.[idx].fresh_till,
-              quantity: 1,
-          } as AddFoodInventoryProps));
-          
-          const response = await InventoryAPI.addItems(selectedItems);
+    try {
+        const selectedItems: AddFoodInventoryProps[] = selected.map((idx: number) => ({
+            food_product_id: results?.[idx].id,
+            fresh_until: results?.[idx].fresh_till,
+            quantity: 1,
+        } as AddFoodInventoryProps));
+        
+        const response = await InventoryAPI.addItems(selectedItems);
 
-          toast({
-              title: "Items added...",
-              variant: "default"
-          });
-      } catch (err) {
-          toast({
-              title: "Failed to upload items.",
-              description: `${err}`,
-              variant: "destructive"
-          });
-      }
-  }, [result]);
+        toast({
+            title: "Items added...",
+            variant: "default"
+        });
+    } catch (err) {
+        toast({
+            title: "Failed to upload items.",
+            description: `${err}`,
+            variant: "destructive"
+        });
+    }
+  }, [results]);
 
   const fetchResults = useCallback(async () => {
     try {
@@ -105,85 +107,88 @@ export default function Page() {
     fetchResults();
   }, []);
 
-  useEffect(() => {
-    console.log(result);
-  }, [result]);
-
   return (
     <section className="relative w-full h-full flex justify-center">
+      
       <div
         className={cn(
           "w-full absolute -z-10 bottom-0 transition-all duration-300"
         )}
         style={{
-          backgroundColor: freshRGBValue((result?.[index].freshness ?? 0) / 100),
-          height: `${result?.[index].freshness ?? 0}%`,
+          backgroundColor: freshRGBValue((results?.[index].freshness ?? 0) / 100),
+          height: `${results?.[index].freshness ?? 0}%`,
         }}
       />
 
-      <div className="container max-w-[70rem] flex flex-col items-center my-10">
-        {/* <div>
-          <h2>FoodName: {result?.local_name}</h2>
-          <p>FoodType: {result?.food_type}</p>
-          <p>Freshness: {result?.freshness}</p>
-        </div> */}
+      <div className="w-full h-auto flex flex-row justify-center items-center">
+        <ChevronLeftCircle 
+          onClick={() => {
+            if (index > 0) setIndex(index - 1);
+          }}
+        />
+        <div className="container max-w-[70rem] flex flex-col items-center my-10">
 
-        {/* <div className="w-16 h-16 ">
-          <Image src="https://placehold.co/400" alt="fruit" width={400} height={400}/>
-        </div> */}
+          {results?.[index].id ?? <h2>FOOD NOT FOUND</h2>}
 
-        {result?.[index].id ?? <h2>FOOD NOT FOUND</h2>}
+          {/* Food Image */}
+          <div className="text-center">
+            <Avatar className="w-36 h-36 border-4 border-white">
+              <AvatarImage src="https://placehold.co/400" />
+            </Avatar>
+            <h2 className="mt-4 text-2xl font-bold capitalize">
+              {results?.[index].local_name}
+            </h2>
+          </div>
 
-        {/* Food Image */}
-        <div className="text-center">
-          <Avatar className="w-36 h-36 border-4 border-white">
-            <AvatarImage src="https://placehold.co/400" />
-          </Avatar>
-          <h2 className="mt-4 text-2xl font-bold capitalize">
-            {result?.[index].local_name}
-          </h2>
+          {/* Details */}
+          <div className="flex-1 w-full max-w-[480px] mt-6 flex gap-4">
+              <div className="w-full">
+                  <h2 className="text-2xl text-center">Nutritional Facts:</h2>
+                  <p>Energy: 100</p>
+                  <p>Protein: 100</p>
+                  <p>Carbs: 100</p>
+                  <p>Sugar: 100</p>
+                  <p>Sodium: 100</p>
+                  <p>Iron: 100</p>
+              </div>
+
+              <div>
+                {results?.[index].fresh_till}
+              </div>
+
+              <div className="w-full">
+                  <h2 className="text-2xl text-center">Total Scanned:</h2>
+                  <p className="text-center">24</p>
+              </div>
+          </div>
+
+          {/* Freshness */}
+          <div>
+            <h2 className="text-black font-semibold text-[64px]">{results?.[index].freshness ?? 0}%</h2>
+          </div>
         </div>
-
-        {/* Details */}
-        <div className="flex-1 w-full max-w-[480px] mt-6 flex gap-4">
-            <div className="w-full">
-                <h2 className="text-2xl text-center">Nutritional Facts:</h2>
-                <p>Energy: 100</p>
-                <p>Protein: 100</p>
-                <p>Carbs: 100</p>
-                <p>Sugar: 100</p>
-                <p>Sodium: 100</p>
-                <p>Iron: 100</p>
-            </div>
-
-            <div>
-              {result?.[index].fresh_till}
-            </div>
-
-            <div className="w-full">
-                <h2 className="text-2xl text-center">Total Scanned:</h2>
-                <p className="text-center">24</p>
-            </div>
-        </div>
-
-        {/* Freshness */}
-        <div>
-          <h2 className="text-black font-semibold text-[64px]">{result?.[index].freshness ?? 0}%</h2>
-        </div>
+        <ChevronRightCircle 
+          onClick={() => {
+            if (index < (results ?? []).length - 1) setIndex(index + 1);
+          }}
+        />
       </div>
-      <FoodItemPicker
-        food_results={result ?? []}
-        ref={FoodPickerRef}
-      />
-      <Button
-        variant="default"
-        className="w-full"
-        onClick={() => {
-          uploadItems(FoodPickerRef?.current?.getSelectedIndex() ?? []);
-        }}
-      >
-        Buy
-      </Button>
+      <div className="flex flex-col justify-center items-center space-y-4">
+        <FoodItemPicker
+          food_results={results ?? []}
+          ref={FoodPickerRef}
+        />
+        <Button
+          variant="default"
+          className="w-full"
+          onClick={() => {
+            uploadItems(FoodPickerRef?.current?.getSelectedIndex() ?? []);
+            router.back();
+          }}
+        >
+          Buy
+        </Button>
+      </div>
     </section>
   );
 }
