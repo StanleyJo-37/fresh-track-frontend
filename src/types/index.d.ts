@@ -48,6 +48,7 @@ export type InventoryItem = {
   id: number;
   local_name: string;
   scientific_name: string;
-  fresh_until: Date,
+  fresh_until: string,
+  bought_at: string;
   quantity: number;
 }
