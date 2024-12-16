@@ -1,12 +1,9 @@
 "use client";
 
-import AiAPI from "@/api/AiAPI";
-import axios from "@/api/axios";
 import { Icons } from "@/components/icons";
-import { base64ToFile } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, } from "react";
 import Webcam from "react-webcam";
 
 export default function Page() {
