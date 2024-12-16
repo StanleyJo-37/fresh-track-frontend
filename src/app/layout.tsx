@@ -10,6 +10,7 @@ import {
 import { AppSidebar } from "@/components/custom/app-sidebar";
 import { Icons } from "@/components/icons";
 import { FreshtrackTrigger } from "@/components/custom/freshtrack-trigger";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,10 +40,8 @@ export default function RootLayout({
       >
         <SidebarProvider defaultOpen={false}>
           <AppSidebar />
-          <main className="absolute w-screen min-h-screen">
-            {/* <SidebarTrigger /> */}
-            {children}
-          </main>
+          <main className="absolute w-screen min-h-screen">{children}</main>
+          <Toaster />
         </SidebarProvider>
       </body>
     </html>
