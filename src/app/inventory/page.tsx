@@ -18,7 +18,7 @@ export default async function Page() {
       <div className="container max-w-[70rem]">
         {
           inventory ?
-            <div className="grid grid-cols-2 gap-12">
+            <div className="grid grid-cols-2 gap-12 max-md:grid-cols-1">
               {
                 inventory.map((item) => (
                     <InventoryCard
