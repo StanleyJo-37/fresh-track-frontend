@@ -114,7 +114,7 @@ export default function Page() {
   }, []);
 
   return (
-    <section className="relative w-full h-full flex justify-center">
+    <section className="relative w-full h-screen flex justify-center">
       
       <div
         className={cn(
@@ -179,6 +179,7 @@ export default function Page() {
           }}
         />
       </div>
+
       <div className="flex flex-col justify-center items-center space-y-4">
         <FoodItemPicker
           food_results={results ?? []}

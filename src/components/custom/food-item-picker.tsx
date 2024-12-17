@@ -34,10 +34,10 @@ export default function FoodItemPicker({
         <div>
             {
                 food_results.map((food, index) => (
-                    <div key={index} className="flex justify-between items-center p-4 border-b-2 border-gray-200">
+                    <div key={index} className="flex flex-col items-center p-4 border-b-2 border-gray-200">
                         <Avatar
                             className={cn(
-                                "w-36 h-36 border-4 border-white",
+                                "w-24 h-24 border-4 border-white",
                                 selected.includes(index) && "border-green-500",
                                 !selected.includes(index) && "border-gray-500"
                             )}
@@ -47,6 +47,10 @@ export default function FoodItemPicker({
                         >
                             <AvatarImage src="https://placehold.co/400" />
                         </Avatar>
+                        <h2>
+                            {food.local_name}
+
+                        </h2>
                     </div>
                 ))
             }
