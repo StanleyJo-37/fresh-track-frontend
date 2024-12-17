@@ -1,9 +1,6 @@
 import { AddFoodInventoryProps, InventoryFoodInfo } from "@/types";
 import axios from "./axios";
 
-// const token = '10|cBz3Z2VjFbbAbllob6VvAa6n8YqDfclh9J7XKdgT9faf048c';
-// const token = '10|cBz3Z2VjFbbAbllob6VvAa6n8YqDfclh9J7XKdgT9faf048c';
-
 const InventoryAPI = {
   all: async ({ token }: { token?: string }) => {
     return await axios.request({
@@ -31,6 +28,7 @@ const InventoryAPI = {
       },
       headers: {
         Authorization: `Bearer ${token}`,
+        Accept: "application/json",
       },
     });
   },

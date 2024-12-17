@@ -1,4 +1,5 @@
 import { Axios } from 'axios';
+import { redirect } from 'next/navigation';
 const baseURL = "http://localhost:8000/api";
 // const baseURL = "https://api.fresh-track.com";
 
@@ -28,5 +29,19 @@ axios.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
+axios.interceptors.response.use(
+    config => {
+        return config
+    },
+    async error => {
+        if(error.status === 401){
+            return window.location.replace("/login")
+        }
+
+        throw error
+    }
+
+)
 
 export default axios;

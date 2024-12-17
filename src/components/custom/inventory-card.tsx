@@ -30,7 +30,7 @@ export default function InventoryCard({
 
     const deleteItem = useCallback(async() => {
         try {
-            const response = await InventoryAPI.deleteItem(food_item.id);
+            const response = await InventoryAPI.deleteItem({food_inventory_id: food_item.id});
             toast({
                 'title': 'Item Deleted',
                 'variant': 'default',
