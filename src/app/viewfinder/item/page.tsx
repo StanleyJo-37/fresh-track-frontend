@@ -12,7 +12,7 @@ import { AxiosError } from "axios";
 import { ChevronLeftCircle, ChevronRightCircle } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const freshRGBValue = (value: number) => {
@@ -66,7 +66,7 @@ export default function Page() {
             quantity: 1,
         } as AddFoodInventoryProps));
         
-        const response = await InventoryAPI.addItems(selectedItems);
+        const response = await InventoryAPI.addItems({data: selectedItems});
 
         toast({
             title: "Items added...",
@@ -92,6 +92,7 @@ export default function Page() {
 
       formData.append("image_upload", file);
       formData.append("date_upload", (new Date()).toISOString());
+
       const results = await AiAPI.infer(formData);
 
       setResult(JSON.parse(results.data));
