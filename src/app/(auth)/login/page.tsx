@@ -41,8 +41,8 @@ export default function Page() {
 
         try {
             // console.log(formData);
-            const response = await AuthAPI.login(data);
-            router.push("/")
+            const response = await AuthAPI.login(data); 
+            // router.push("/")
         } catch (err: any) {
             console.error("Server Error:", err.response.data);
             setError(err.response?.data?.message || "Invalid input");
