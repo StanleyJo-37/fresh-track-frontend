@@ -49,41 +49,57 @@ export default function Page() {
     imageString = localStorage.getItem("snapped_image") as string;
   }
 
-  const router = useRouter();
   const [results, setResult] = useState<FoodResult[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [index, setIndex] = useState<number>(0);
   const { toast } = useToast();
-
-  const FoodPickerRef = useRef<{ getSelectedIndex: () => number[] }>(null); 
-
-  const uploadItems = useCallback(async(selected: number[]) => {
-    setIsLoading(true);
-    try {
-        const selectedItems: AddFoodInventoryProps[] = selected.map((idx: number) => ({
-            food_product_id: results?.[idx].id,
-            fresh_until: results?.[idx].fresh_till,
-            quantity: 1,
-        } as AddFoodInventoryProps));
-        
-        const response = await InventoryAPI.addItems({data: selectedItems});
-
-        toast({
-            title: "Items added...",
-            variant: "default"
-        });
-
-        router.back();
-    } catch (err) {
-        toast({
-            title: "Failed to upload items.",
-            description: `${err}`,
-            variant: "destructive"
-        });
-    } finally {
-      setIsLoading(false);
+  
+  // const FoodPickerRef = useRef<{ getSelectedIndex: () => number[] }>(null);
+  
+  const [selected, setSelected] = useState<number[]>([]); 
+  const onSelect = (index: number) => {
+    if (selected.includes(index)) {
+      setSelected(selected.filter((i) => i !== index));
+    } else {
+      setSelected([...selected, index]);
     }
-  }, [results]);
+  };
+
+  const uploadItems = useCallback(
+    async (selected: number[]) => {
+      setIsLoading(true);
+      try {
+        const selectedItems: AddFoodInventoryProps[] = selected.map(
+          (idx: number) =>
+            ({
+              food_product_id: results?.[idx].id,
+              fresh_until: results?.[idx].fresh_till,
+              quantity: 1,
+            } as AddFoodInventoryProps)
+        );
+
+        const response = await InventoryAPI.addItems({
+          food_items: selectedItems,
+        });
+
+        toast({
+          title: "Items added...",
+          variant: "default",
+        });
+
+        // router.back();
+      } catch (err) {
+        toast({
+          title: "Failed to upload items.",
+          description: `${err}`,
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [results]
+  );
 
   const fetchResults = useCallback(async () => {
     try {
@@ -91,7 +107,7 @@ export default function Page() {
       const formData = new FormData();
 
       formData.append("image_upload", file);
-      formData.append("date_upload", (new Date()).toISOString());
+      formData.append("date_upload", new Date().toISOString());
 
       const results = await AiAPI.infer(formData);
 
@@ -115,25 +131,25 @@ export default function Page() {
 
   return (
     <section className="relative w-full h-screen flex justify-center">
-      
       <div
         className={cn(
           "w-full absolute -z-10 bottom-0 transition-all duration-300"
         )}
         style={{
-          backgroundColor: freshRGBValue((results?.[index].freshness ?? 0) / 100),
+          backgroundColor: freshRGBValue(
+            (results?.[index].freshness ?? 0) / 100
+          ),
           height: `${results?.[index].freshness ?? 0}%`,
         }}
       />
 
       <div className="w-full h-auto flex flex-row justify-center items-center">
-        <ChevronLeftCircle 
+        <ChevronLeftCircle
           onClick={() => {
             if (index > 0) setIndex(index - 1);
           }}
         />
         <div className="container max-w-[70rem] flex flex-col items-center my-10">
-
           {results?.[index].id ?? <h2>FOOD NOT FOUND</h2>}
 
           {/* Food Image */}
@@ -148,32 +164,32 @@ export default function Page() {
 
           {/* Details */}
           <div className="flex-1 w-full max-w-[480px] mt-6 flex gap-4">
-              <div className="w-full">
-                  <h2 className="text-2xl text-center">Nutritional Facts:</h2>
-                  <p>Energy: 100</p>
-                  <p>Protein: 100</p>
-                  <p>Carbs: 100</p>
-                  <p>Sugar: 100</p>
-                  <p>Sodium: 100</p>
-                  <p>Iron: 100</p>
-              </div>
+            <div className="w-full">
+              <h2 className="text-2xl text-center">Nutritional Facts:</h2>
+              <p>Energy: 100</p>
+              <p>Protein: 100</p>
+              <p>Carbs: 100</p>
+              <p>Sugar: 100</p>
+              <p>Sodium: 100</p>
+              <p>Iron: 100</p>
+            </div>
 
-              <div>
-                {results?.[index].fresh_till}
-              </div>
+            <div>{results?.[index].fresh_till}</div>
 
-              <div className="w-full">
-                  <h2 className="text-2xl text-center">Total Scanned:</h2>
-                  <p className="text-center">24</p>
-              </div>
+            <div className="w-full">
+              <h2 className="text-2xl text-center">Total Scanned:</h2>
+              <p className="text-center">24</p>
+            </div>
           </div>
 
           {/* Freshness */}
           <div>
-            <h2 className="text-black font-semibold text-[64px]">{results?.[index].freshness ?? 0}%</h2>
+            <h2 className="text-black font-semibold text-[64px]">
+              {results?.[index].freshness ?? 0}%
+            </h2>
           </div>
         </div>
-        <ChevronRightCircle 
+        <ChevronRightCircle
           onClick={() => {
             if (index < (results ?? []).length - 1) setIndex(index + 1);
           }}
@@ -181,18 +197,36 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col justify-center items-center space-y-4">
-        <FoodItemPicker
-          food_results={results ?? []}
-          ref={FoodPickerRef}
-        />
+        <div>
+          {results?.map((food, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center p-4 border-b-2 border-gray-200"
+            >
+              <Avatar
+                className={cn(
+                  "w-24 h-24 border-4 border-white",
+                  selected.includes(index) && "border-green-500",
+                  !selected.includes(index) && "border-gray-500"
+                )}
+                onClick={() => {
+                  onSelect(index);
+                }}
+              >
+                <AvatarImage src="https://placehold.co/400" />
+              </Avatar>
+              <h2>{food.local_name}</h2>
+            </div>
+          ))}
+        </div>
         <Button
           variant="default"
           className="w-full"
           onClick={() => {
-            uploadItems(FoodPickerRef?.current?.getSelectedIndex() ?? []);
+            uploadItems(selected ?? []);
           }}
         >
-          Buy
+          Beli
         </Button>
       </div>
     </section>

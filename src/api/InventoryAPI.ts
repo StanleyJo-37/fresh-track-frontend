@@ -17,19 +17,20 @@ const InventoryAPI = {
   },
 
   addItems: async ({
-    data,
+    food_items,
     token,
   }: {
-    data: AddFoodInventoryProps[];
+    food_items: any;
     token?: string;
   }) => {
     return await axios.request({
       url: "/inventory/",
       method: "POST",
-      data,
+      data: {
+        food_items
+      },
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: "application/json",
       },
     });
   },
