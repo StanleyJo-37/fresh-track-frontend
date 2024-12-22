@@ -56,6 +56,7 @@ export default function Page() {
     imageString = localStorage.getItem("snapped_image") as string;
   }
 
+  const router = useRouter();
   const [results, setResult] = useState<FoodResult[]>();
   const [isLoading, setLoading] = useState<boolean>(true);
   const [index, setIndex] = useState<number>(0);
@@ -98,6 +99,7 @@ export default function Page() {
           variant: "default",
         });
 
+        router.push('/inventory');
         // router.back();
       } catch (err) {
         toast({
