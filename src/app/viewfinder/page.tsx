@@ -22,9 +22,9 @@ export default function Page() {
   }, [cameraRef]);
 
   const videoConstraints = {
-    width: Number(screenWidth),
-    height: Number(screenHeight),
-    facingMode: "user",
+    // width: Number(screenWidth),
+    // height: Number(screenHeight),
+    facingMode: "environment",
   };
 
   return (
