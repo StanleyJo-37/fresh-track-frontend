@@ -1,4 +1,3 @@
-import "server-only";
 import { deleteServerCookie, getServerCookie } from "./cookie";
 import { baseURL } from "@/api/axios";
 

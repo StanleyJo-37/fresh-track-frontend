@@ -3,7 +3,7 @@
 import InventoryAPI from "@/api/InventoryAPI";
 import InventoryCard from "@/components/custom/inventory-card";
 import { InventoryItem } from "@/types";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import { useEffect, useState } from "react";
 
 const getInventory = async () => {
