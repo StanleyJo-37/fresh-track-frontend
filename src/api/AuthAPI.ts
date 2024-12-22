@@ -19,12 +19,23 @@ const AuthAPI = {
         return await axios.request({
             url: "/login",
             method: "POST",
+            withCredentials: true,
             data,
             headers: {
                 "Content-Type": "application/json",
                 'Accept': 'application/json'
             },
         });
+    },
+    logout: async() => {
+        return await axios.request({
+            url: "/logout",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'Accept': 'application/json'
+            },
+        })
     }
     
 };
