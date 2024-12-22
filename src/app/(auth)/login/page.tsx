@@ -5,12 +5,15 @@ import axios from "@/api/axios";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { AuthContext } from "@/contexts/AuthContext";
 import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 
 export default function Page() {
   const router = useRouter();
+  const { setToken } = useContext(AuthContext); 
+
   const [error, setError] = useState<any>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
@@ -33,7 +36,10 @@ export default function Page() {
       try {
         const { data } = await AuthAPI.login(login_info);
         const parsed_data = JSON.parse(data);
+
         localStorage.setItem('freshtrack_token', parsed_data.token);
+        setToken(parsed_data.token);
+        
         router.push("/")
       } catch (err: any) {
         console.error("Server Error:", err.response.data);
