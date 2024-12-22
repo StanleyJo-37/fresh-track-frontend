@@ -34,7 +34,7 @@ export default function Page() {
         const { data } = await AuthAPI.login(login_info);
         const parsed_data = JSON.parse(data);
         localStorage.setItem('freshtrack_token', parsed_data.token);
-        // router.push("/")
+        router.push("/")
       } catch (err: any) {
         console.error("Server Error:", err.response.data);
         setError(err.response?.data?.message || "Invalid input");
