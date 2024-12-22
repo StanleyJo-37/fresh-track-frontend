@@ -8,10 +8,11 @@ import { useEffect, useState } from "react";
 
 const getInventory = async () => {
   try {
-    const token = localStorage.getItem('freshtrack_token');
-    const {data} = await InventoryAPI.all({
-      token: token!
+    const token = localStorage.getItem("freshtrack_token");
+    const response = await InventoryAPI.all({
+      token: token!,
     });
+    const data = JSON.parse(response.data);
     return data;
   } catch (err: any) {
     console.error("Server Error:", err);
@@ -19,8 +20,8 @@ const getInventory = async () => {
   }
 };
 
-export default async function Page() {
-  const [inventory, setInventory] = useState<InventoryItem[]>();
+export default function Page() {
+  const [inventory, setInventory] = useState<InventoryItem[]>([]);
   // let inventory: InventoryItem[] = [];
 
   // try {
@@ -33,23 +34,20 @@ export default async function Page() {
   // };
 
   useEffect(() => {
-    getInventory().then((data)=>{
+    getInventory().then((data) => {
+      console.log(data);
       setInventory(data);
-    })
+    });
   }, []);
 
   return (
     <section className="w-full h-full flex justify-center py-16">
       <div className="container max-w-[70rem]">
-        {inventory ? (
-          <div className="grid grid-cols-2 gap-12 max-md:grid-cols-1">
-            {inventory.map((item) => (
-              <InventoryCard food_item={item} key={item.id} />
-            ))}
-          </div>
-        ) : (
-          <></>
-        )}
+        <div className="grid grid-cols-2 gap-12 max-md:grid-cols-1">
+          {inventory?.map((item) => (
+            <InventoryCard food_item={item} key={item.id} />
+          ))}
+        </div>
       </div>
     </section>
   );

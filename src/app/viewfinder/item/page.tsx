@@ -111,9 +111,11 @@ export default function Page() {
       formData.append("image_upload", file);
       formData.append("date_upload", new Date().toISOString());
 
-      const results = await AiAPI.infer(formData);
+      const token = localStorage.getItem('freshtrack_token');
+      const response = await AiAPI.infer(formData, token!);
+      const data = JSON.parse(response.data)
 
-      setResult(JSON.parse(results.data));
+      setResult(data);
     } catch (err) {
       if (err instanceof AxiosError) {
         toast({
