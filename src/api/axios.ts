@@ -1,6 +1,7 @@
 import { Axios } from 'axios';
 import { redirect } from 'next/navigation';
-const baseURL = "http://localhost:8000/api";
+
+export const baseURL = "http://localhost:8000/api";
 // const baseURL = "https://api.fresh-track.com";
 
 const axios = new Axios({
