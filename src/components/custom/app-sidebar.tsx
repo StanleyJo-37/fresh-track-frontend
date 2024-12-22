@@ -24,6 +24,16 @@ import { FreshtrackTrigger } from "./freshtrack-trigger";
 
 const items = [
   {
+    title: "Home",
+    url: "/",
+    icon: <Icons.House className="w-6 h-6"/>,
+  },
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: <Icons.LayoutDashboard className="w-6 h-6"/>,
+  },
+  {
     title: "Camera",
     url: "/viewfinder",
     icon: <Icons.Camera className="w-6 h-6"/>,
