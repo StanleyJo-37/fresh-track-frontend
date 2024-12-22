@@ -27,13 +27,13 @@ export async function middleware(request: NextRequest) {
   const token = await getServerCookie('freshtrack_token');
   const session = await getSession(token!);
 
-  if(blockedRoutes.includes(path)){
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
+  // if(blockedRoutes.includes(path)){
+  //   return NextResponse.redirect(new URL('/login', request.url));
+  // }
 
-  if(protectedRoutes.includes(path) && !session){
-    return NextResponse.rewrite(new URL('/login', request.url))
-  }
+  // if(protectedRoutes.includes(path) && !session){
+  //   return NextResponse.rewrite(new URL('/login', request.url))
+  // }
 
   return NextResponse.next();
 }
