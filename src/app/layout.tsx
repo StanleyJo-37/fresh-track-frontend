@@ -11,6 +11,7 @@ import { AppSidebar } from "@/components/custom/app-sidebar";
 import { Icons } from "@/components/icons";
 import { FreshtrackTrigger } from "@/components/custom/freshtrack-trigger";
 import { Toaster } from "@/components/ui/toaster";
+import AuthProvider from "@/contexts/AuthContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,11 +39,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SidebarProvider defaultOpen={false}>
-          <AppSidebar />
-          <main className="absolute w-screen min-h-screen">{children}</main>
-          <Toaster />
-        </SidebarProvider>
+        <AuthProvider>
+          <SidebarProvider defaultOpen={false}>
+            <AppSidebar />
+            <main className="absolute w-screen min-h-screen">{children}</main>
+            <Toaster />
+          </SidebarProvider>
+        </AuthProvider>
       </body>
     </html>
   );

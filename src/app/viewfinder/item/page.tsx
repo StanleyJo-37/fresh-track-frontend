@@ -78,8 +78,10 @@ export default function Page() {
             } as AddFoodInventoryProps)
         );
 
+        const token = localStorage.getItem('freshtrack_token');
         const response = await InventoryAPI.addItems({
           food_items: selectedItems,
+          token: token!
         });
 
         toast({

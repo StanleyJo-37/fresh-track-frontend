@@ -19,7 +19,6 @@ export default function Page() {
     }
 
     router.push('/viewfinder/item')
-
   }, [cameraRef]);
 
   const videoConstraints = {

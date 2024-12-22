@@ -3,18 +3,18 @@ import type { NextRequest } from "next/server";
 import { getSession } from "./lib/session";
 import { getServerCookie } from "./lib/cookie";
 
-const protectedRoutes = [
+export const protectedRoutes = [
   '/viewfinder',
   '/inventory',
   '/profile',
 ];
 
-const publicRoutes = [
+export const publicRoutes = [
   '/login',
   '/register'
 ]
 
-const blockedRoutes = [
+export const blockedRoutes = [
   '/register'
 ]
 
