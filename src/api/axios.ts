@@ -12,6 +12,7 @@ const axios = new Axios({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Access-Control-Allow-Origin': '*',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
     }
 });
 
