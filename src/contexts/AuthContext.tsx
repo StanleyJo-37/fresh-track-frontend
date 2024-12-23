@@ -4,10 +4,11 @@ import { getSession } from '@/lib/session';
 import { UserType } from '@/types';
 import React, { createContext, useEffect, useState } from 'react'
 
-const AuthContext = createContext({
+export const AuthContext = createContext({
   isAuth: false,
   user: {} as UserType | undefined,
-
+  token: "",
+  setToken: (token:string) => {}
 });
 
 export default function AuthProvider({ children }:{children: React.ReactNode}) {
@@ -21,21 +22,28 @@ export default function AuthProvider({ children }:{children: React.ReactNode}) {
   }, [])
 
   useEffect(()=>{
-    if(token){
-      getSession(token).then((data) => {
-        setUser(data);
-      })
+    if(!token){
+      setAuth(false);
     }
-  }, [token])
 
-  useEffect(()=>{
-    setAuth(user != undefined);
-  }, [user])
+    getSession(token).then((data) => {
+      if(data){
+        setUser(data);
+        setAuth(true);  
+        return;
+      } 
+      
+      setAuth(false);
+    });
+
+  }, [token])
 
   return (
     <AuthContext.Provider value={{
       isAuth,
-      user
+      user,
+      token,
+      setToken
     }}>{children}</AuthContext.Provider>
   )
 }
