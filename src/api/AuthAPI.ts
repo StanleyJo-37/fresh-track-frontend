@@ -8,13 +8,13 @@ const AuthAPI = {
             method: "GET"
         })
     },
-    register: async(data: RegisterProps) => {
-        return await axios.request({
-            url: "/register",
-            method: "POST",
-            data
-        });
-    },
+    // register: async(data: RegisterProps) => {
+    //     return await axios.request({
+    //         url: "/register",
+    //         method: "POST",
+    //         data
+    //     });
+    // },
     login: async(data: LoginProps) => {
         return await axios.request({
             url: "/login",
