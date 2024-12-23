@@ -1,7 +1,7 @@
 import { Axios } from 'axios';
 import { redirect } from 'next/navigation';
 
-export const baseURL = "http://localhost:8000/api";
+export const baseURL = "https://bf91-108-137-18-40.ngrok-free.app/api";
 // const baseURL = "https://api.fresh-track.com";
 
 const axios = new Axios({
